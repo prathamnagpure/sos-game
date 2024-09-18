@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.37b7b186.css",
-    "main.js": "/static/js/main.df18da06.js",
-    "static/js/453.4afc63f7.chunk.js": "/static/js/453.4afc63f7.chunk.js",
-    "index.html": "/index.html",
-    "main.37b7b186.css.map": "/static/css/main.37b7b186.css.map",
-    "main.df18da06.js.map": "/static/js/main.df18da06.js.map",
-    "453.4afc63f7.chunk.js.map": "/static/js/453.4afc63f7.chunk.js.map"
+    "main.css": "/sos-game/static/css/main.37b7b186.css",
+    "main.js": "/sos-game/static/js/main.1cb2d861.js",
+    "static/js/453.4afc63f7.chunk.js": "/sos-game/static/js/453.4afc63f7.chunk.js",
+    "index.html": "/sos-game/index.html",
+    "main.37b7b186.css.map": "/sos-game/static/css/main.37b7b186.css.map",
+    "main.1cb2d861.js.map": "/sos-game/static/js/main.1cb2d861.js.map",
+    "453.4afc63f7.chunk.js.map": "/sos-game/static/js/453.4afc63f7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.37b7b186.css",
-    "static/js/main.df18da06.js"
+    "static/js/main.1cb2d861.js"
   ]
 }
