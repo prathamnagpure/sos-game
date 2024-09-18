@@ -10,28 +10,68 @@ function App() {
   const [winner, setWinner] = useState(null);
   const [character, setCharacter] = useState('S');
 
+  useEffect(() => {
+    document.title = 'SOS Game';
+  }, []);
 
+const checkForWin = useCallback((grid) => {
+  const numRows = grid.length;
+  const numCols = grid[0].length;
 
-  const checkForWin = useCallback((grid) => {
-    const lines = [];
+  const checkLineForSOS = (line) => {
+    for (let i = 0; i <= line.length - 3; i++) {
+      if (line[i] === 'S' && line[i + 1] === 'O' && line[i + 2] === 'S') {
+        return true;
+      }
+    }
+    return false;
+  };
 
-    for (let i = 0; i < Math.min(grid[0].length, grid.length); i++) {
-      lines.push(grid[i]); // Row
-      lines.push(grid.map(row => row[i])); // Column
+  // Check rows and columns
+  for (let i = 0; i < numRows; i++) {
+    // Check row
+    if (checkLineForSOS(grid[i])) {
+      return true;
     }
 
-    lines.push(grid.map((row, i) => row[i])); // Top-left to bottom-right
-    lines.push(grid.map((row, i) => row[Math.min(grid.length, grid[0].length) - 1 - i])); // Top-right to bottom-left
+    // Check column
+    const column = [];
+    for (let j = 0; j < numCols; j++) {
+      column.push(grid[j][i]);
+    }
+    if (checkLineForSOS(column)) {
+      return true;
+    }
+  }
 
-    return lines.some(line => {
-      for (let i = 0; i <= line.length - 3; i++) {
-        if (line[i] === 'S' && line[i+1] === 'O' && line[i+2] === 'S') {
-          return true;
-        }
+  // Check top-left to bottom-right diagonals
+  for (let i = 0; i <= numRows - 3; i++) {
+    for (let j = 0; j <= numCols - 3; j++) {
+      let diag1 = [];
+      for (let k = 0; k < Math.min(numRows - i, numCols - j); k++) {
+        diag1.push(grid[i + k][j + k]);
       }
-      return false;
-    });
-  }, []);
+      if (checkLineForSOS(diag1)) {
+        return true;
+      }
+    }
+  }
+
+  // Check top-right to bottom-left diagonals
+  for (let i = 0; i <= numRows - 3; i++) {
+    for (let j = 2; j < numCols; j++) {
+      let diag2 = [];
+      for (let k = 0; k < Math.min(numRows - i, j + 1); k++) {
+        diag2.push(grid[i + k][j - k]);
+      }
+      if (checkLineForSOS(diag2)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}, []);
 
   const handleClick = useCallback ((row, col) => {
     if (grid[row][col] !== '' || winner) return;
@@ -77,13 +117,13 @@ function App() {
 
   return (
     <div className="App">
-      <h1>SOS Game : (In development)</h1>
+      <h1>SOS Game</h1>
       <span>
         <span>{"Size: "}</span>
-        <input type="number" value={sizeRow} onChange={(e) => setSizeRow(e.target.value)} />
+        <input type="number" value={sizeRow} onChange={(e) => setSizeRow(e.target.value)} style={{width: '50px', margin: '5px'}} />
         <span>{"x"}</span>
-        <input type="number" value={sizeCol} onChange={(e) => setSizeCol(e.target.value)} />
-        <button onClick={() => reset(sizeRow, sizeCol)}>Reset</button>
+        <input type="number" value={sizeCol} onChange={(e) => setSizeCol(e.target.value)} style={{width: '50px', margin: '5px'}}/>
+        <button onClick={() => reset(sizeRow, sizeCol)} style={{marginLeft: '10px'}}>Reset</button>
       </span>
       <h2>Current Player: {currentPlayer}</h2>
       {winner && <h2>Winner: {winner}</h2>}
